@@ -78,7 +78,7 @@ public abstract class StringUtils {
 		if (quoted) {
 			sb.append("'");
 		}
-		if (escaped.indexOf(byteChar) != -1) {
+		if (escaped.indexOf(byteChar) != -1 || byteChar == '\'') {
 			sb.append("\\");
 		}
 		sb.append((char) byteChar);
