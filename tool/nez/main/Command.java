@@ -26,6 +26,7 @@ public abstract class Command {
 	public final static int MajorVersion = 1;
 	public final static int MinerVersion = 0;
 	public final static int PatchLevel = nez.Version.REV;
+	public static boolean dumpMaster = false;
 
 	public static void main(String[] args) {
 		try {
@@ -34,7 +35,17 @@ public abstract class Command {
 				Verbose.println("nez-%d.%d.%d %s", MajorVersion, MinerVersion, PatchLevel, com.getClass().getName());
 				Verbose.println("strategy: %s", com.strategy);
 			}
-			com.exec();
+                        if (dumpMaster) {
+                            Grammar grammar = new Grammar("nez");
+                            Grammar ng = new NezGrammarCombinator().load(grammar, "File");
+                            ConsoleUtils.println("//");
+                            ConsoleUtils.println("// If you'll try to excute this grammar you'll need");
+                            ConsoleUtils.println("// replace '$format' by any other name like '$xformat'");
+                            ConsoleUtils.println("// because 'format' is a keyword");
+                            ConsoleUtils.println("//");
+                            ng.dump();
+                        }
+                        else com.exec();
 		} catch (IOException e) {
 			ConsoleUtils.println(e);
 			Verbose.traceException(e);
@@ -77,6 +88,10 @@ public abstract class Command {
 	private void parseCommandOption(String[] args) {
 		for (int index = 1; index < args.length; index++) {
 			String as = args[index];
+                        if (as.equals("-m") || as.equals("--masterDump")) {
+                            dumpMaster = true;
+                            break;
+                        }
 			if (index + 1 < args.length) {
 				if (as.equals("-g") || as.equals("--grammar") || as.equals("-p")) {
 					grammarFile = args[index + 1];
@@ -146,6 +161,7 @@ public abstract class Command {
 		// ConsoleUtils.println("  -a <file>      Specify a Nez auxiliary grammar files");
 		ConsoleUtils.println("  -s | --start <NAME>        Specify a starting production");
 		ConsoleUtils.println("  -d | --dir <dirname>       Specify an output dir");
+		ConsoleUtils.println("  -m | --masterDump          Dump master grammar and exit");
 		ConsoleUtils.println("Example:");
 		ConsoleUtils.println("  nez parse -g js.nez jquery.js --format json");
 		ConsoleUtils.println("  nez match -g js.nez *.js");
