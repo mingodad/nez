@@ -83,10 +83,15 @@ public class PEGTranslator extends ParserGrammarWriter {
 				W(prefix);
 			}
 			Expression inner = e.get(0);
-			if (inner instanceof Nez.Choice || inner instanceof Nez.Sequence) {
-				W("(");
+			if (inner instanceof Nez.Choice
+                                || inner instanceof Nez.Sequence
+                                || e instanceof Nez.ZeroMore
+                                || e instanceof Nez.OneMore
+                                || e instanceof Nez.Option
+                                ) {
+				if(inner.size() > 1) W("(");
 				this.visitExpression(e.get(0));
-				W(")");
+				if(inner.size() > 1) W(")");
 			} else {
 				this.visitExpression(e.get(0));
 			}
@@ -132,6 +137,8 @@ public class PEGTranslator extends ParserGrammarWriter {
 					W("(");
 					visitExpression(e);
 					W(")");
+				} else if (e instanceof Nez.Sequence) {
+					visitExpression(e);
 				} else {
 					visitExpression(e);
 				}
