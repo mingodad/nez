@@ -60,7 +60,8 @@ public abstract class GrammarTranslatorVisitor extends Expression.Visitor {
 			return name;
 		}
 		int loc = s.lastIndexOf(':');
-		if (loc > 0) {
+                //need a better solution here
+		if (loc > 0 && !(s.equals("\":\"") || s.equals("\"::\""))) {
 			name = s.substring(loc + 1).replace("!", "_").replace("-", "PEG");
 		} else {
 			name = s.replace("!", "_").replace("-", "PEG");
