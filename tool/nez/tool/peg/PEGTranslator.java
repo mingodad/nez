@@ -89,11 +89,11 @@ public class PEGTranslator extends ParserGrammarWriter {
                                 || e instanceof Nez.OneMore
                                 || e instanceof Nez.Option
                                 ) {
-				if(inner.size() > 1) W("(");
-				this.visitExpression(e.get(0));
-				if(inner.size() > 1) W(")");
+				W("(");
+				this.visitExpression(inner);
+				W(")");
 			} else {
-				this.visitExpression(e.get(0));
+				this.visitExpression(inner);
 			}
 			if (suffix != null) {
 				W(suffix);
@@ -194,9 +194,13 @@ public class PEGTranslator extends ParserGrammarWriter {
 
 		@Override
 		public void visitLink(Nez.LinkTree p) {
+			Expression inner = p.get(0);
+			Boolean needParens = (inner instanceof Nez.Choice);
+			if(needParens) W("(");
 			SemanticAction("start()");
-			visitExpression(p.get(0));
+			visitExpression(inner);
 			SemanticAction("commit()");
+			if(needParens) W(")");
 		}
 
 		@Override
