@@ -33,6 +33,11 @@ public class Cmatch extends Command {
 				failedInputs.add(file.getResourceName());
 				failureCount++;
 			}
+                        else {
+                            ConsoleUtils.println(String.format("OK: %s : %s MiB/s",
+                                    file.getResourceName(),
+                                    StringUtils.formatMPS(file.length(), (t2 - t))));
+                        }
 			consumed += file.length();
 			time += (t2 - t);
 			parser.logProfiler();
