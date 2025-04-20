@@ -24,6 +24,8 @@ public abstract class ParserCode<T extends Instruction> {
 	protected UList<T> codeList;
 	protected final boolean RecognitionMode;
 
+        public final class MatchSucceed {}
+
 	protected ParserCode(Grammar grammar, T[] initArray) {
 		this.grammar = grammar;
 		this.funcMap = new HashMap<>();

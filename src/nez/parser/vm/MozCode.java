@@ -32,6 +32,9 @@ public class MozCode extends ParserCode<MozInst> {
 		} catch (TerminationException e) {
 			result = e.status;
 		}
+		if(result && context.getRuntime().getTreeConstruction() == false) {
+			return new MatchSucceed();
+		}
 		return result ? machine.getParseResult(startPosition, context.getPosition()) : null;
 	}
 

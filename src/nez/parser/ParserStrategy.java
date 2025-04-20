@@ -253,6 +253,7 @@ public class ParserStrategy {
 		MemoTable table = MemoTable.newTable(this.SlidingWindow, memoPointSize);
 		MozMachine machine = new MozMachine(source);
 		machine.init(table, prototype);
+		machine.treeConstruction = this.TreeConstruction;
 		return new ParserInstance(source, machine);
 	}
 

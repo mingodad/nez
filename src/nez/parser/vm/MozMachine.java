@@ -14,6 +14,7 @@ public final class MozMachine extends ParserRuntime {
 	Source s;
 	long pos;
 	long head_pos;
+	public boolean treeConstruction = true;
 
 	public MozMachine(Source source) {
 		this.s = source;
@@ -48,6 +49,11 @@ public final class MozMachine extends ParserRuntime {
 	@Override
 	public boolean hasUnconsumed() {
 		return this.pos != s.length();
+	}
+
+	@Override
+	public boolean getTreeConstruction() {
+		return treeConstruction;
 	}
 
 	public final boolean consume(int length) {

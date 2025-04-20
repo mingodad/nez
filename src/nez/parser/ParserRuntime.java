@@ -8,4 +8,5 @@ public abstract class ParserRuntime {
 
 	public abstract long getMaximumPosition();
 
+	public abstract boolean getTreeConstruction();
 }
