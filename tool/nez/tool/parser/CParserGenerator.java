@@ -67,6 +67,22 @@ public class CParserGenerator extends CommonParserGenerator {
 		return "NULL";
 	}
 
+	@Override
+	protected String _byte(int ch) {
+                String rc = "" + (ch & 0xff);
+		if (ch < 128 && (!Character.isISOControl(ch))) {
+                    switch(ch) {
+                        case '\'': rc += "/*'\\''*/"; break;
+                        case '\\': rc += "/*'\\\\'*/"; break;
+                        case '\n': rc += "/*'\\n'*/"; break;
+                        case '\r': rc += "/*'\\r'*/"; break;
+                        case '\f': rc += "/*'\\f'*/"; break;
+                        default: rc += "/*'" + (char) ch + "'*/";
+                    }
+		}
+		return rc;
+	}
+
 	/* Expression */
 
 	@Override
