@@ -27,6 +27,7 @@ public abstract class Command {
 	public final static int MinerVersion = 0;
 	public final static int PatchLevel = nez.Version.REV;
 	public static boolean dumpMaster = false;
+	public static boolean dumpUser = false;
 
 	public static void main(String[] args) {
 		try {
@@ -44,6 +45,10 @@ public abstract class Command {
                             ConsoleUtils.println("// because 'format' is a keyword");
                             ConsoleUtils.println("//");
                             ng.dump();
+                        }
+                        else if (dumpUser) {
+                            Grammar grammar = com.getSpecifiedGrammar();
+                            grammar.dump();
                         }
                         else com.exec();
 		} catch (IOException e) {
@@ -92,11 +97,17 @@ public abstract class Command {
                             dumpMaster = true;
                             break;
                         }
+                        if (as.equals("-u") || as.equals("--userDump")) {
+                            dumpUser = true;
+                            if(grammarFile == null) continue;
+                            break;
+                        }
 			if (index + 1 < args.length) {
 				if (as.equals("-g") || as.equals("--grammar") || as.equals("-p")) {
 					grammarFile = args[index + 1];
 					grammarSource = null;
 					index++;
+                                        if(dumpUser) break;
 					continue;
 				}
 				if (as.equals("-e") || as.equals("--expression")) {
@@ -162,6 +173,7 @@ public abstract class Command {
 		ConsoleUtils.println("  -s | --start <NAME>        Specify a starting production");
 		ConsoleUtils.println("  -d | --dir <dirname>       Specify an output dir");
 		ConsoleUtils.println("  -m | --masterDump          Dump master grammar and exit");
+		ConsoleUtils.println("  -u | --userDump            Dump user grammar and exit");
 		ConsoleUtils.println("Example:");
 		ConsoleUtils.println("  nez parse -g js.nez jquery.js --format json");
 		ConsoleUtils.println("  nez match -g js.nez *.js");
