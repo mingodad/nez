@@ -463,7 +463,7 @@ public abstract class Expression extends AbstractList<Expression> implements Sou
 				sb.append(" ");
 				sb.append(argument);
 			}
-			if (e.hasInnerExpression()) {
+			if (e.op != FunctionName.isa && e.hasInnerExpression()) {
 				sb.append(" ");
 				sb.append(e.get(0));
 			}
