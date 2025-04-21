@@ -205,12 +205,12 @@ public class NezGrammarCombinator extends Combinator {
 	}
 
 	public Expression pCharacter() {
-		Expression StringContent = ZeroMore(Choice(t("\\'"), t("\\\\"), Sequence(Not(t("'")), AnyChar())));
+		Expression StringContent = ZeroMore(Choice(t("\\'"), t("\\\\"), Sequence(Not(c("'\n\r")), AnyChar())));
 		return Sequence(t("'"), New(StringContent, Tag("Character")), t("'"));
 	}
 
 	public Expression pString() {
-		Expression StringContent = ZeroMore(Choice(t("\\\""), t("\\\\"), Sequence(Not(t("\"")), AnyChar())));
+		Expression StringContent = ZeroMore(Choice(t("\\\""), t("\\\\"), Sequence(Not(c("\"\n\r")), AnyChar())));
 		return Sequence(t("\""), New(StringContent, Tag("String")), t("\""));
 	}
 
