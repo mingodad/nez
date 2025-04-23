@@ -385,6 +385,11 @@ public class NezFileFormatter extends TreeVisitor {
 		return true;
 	}
 
+	public boolean pSymbol(Tree<?> node) {
+		f.write("<symbol " + node.getText(_name, "") + ">");
+		return true;
+	}
+
 	public boolean pExists(Tree<?> node) {
 		String symbol = node.getText(_symbol, null);
 		if (symbol == null) {
