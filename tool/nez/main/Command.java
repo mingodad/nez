@@ -191,6 +191,8 @@ public abstract class Command {
 		ConsoleUtils.println("  bench      perform benchmark tests");
 		ConsoleUtils.println("  example    display examples in a grammar");
 		ConsoleUtils.println("  test       perform grammar tests");
+		ConsoleUtils.println("  format     perform grammar formating");
+		ConsoleUtils.println("  dump       perform grammar dump with stats");
 		ConsoleUtils.exit(0, msg);
 	}
 
