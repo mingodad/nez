@@ -32,7 +32,21 @@ public class PEGTranslator extends ParserGrammarWriter {
 		@Override
 		public void visitProduction(Grammar gg, Production p) {
 			Expression e = p.getExpression();
-			L(name(p.getLocalName()));
+                        String lname = p.getLocalName();
+                        if(lname.charAt(0) == '"') {
+                            if(lname.substring(1, lname.length()-1).matches("[A-Za-z_][A-Za-z0-9_]*")){
+                                lname = "TK_" + lname.substring(1, lname.length()-1);
+                            }
+                            else {
+                                //s = "TK_" + s.substring(1, s.length()-1).;
+                                String s2 = lname.substring(1, lname.length()-1);
+                                lname = "TK_";
+                                for (int i = 0; i < s2.length(); i++) {
+                                    lname += String.format("%02x", s2.codePointAt(i));
+                                }
+                            }
+                        }
+			L(name(lname));
 			Begin("");
 			L("<- ");
 			if (e instanceof Nez.Choice) {
