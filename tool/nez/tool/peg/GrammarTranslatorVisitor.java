@@ -54,11 +54,24 @@ public abstract class GrammarTranslatorVisitor extends Expression.Visitor {
 
 	HashMap<String, String> m = new HashMap<String, String>();
 
-	protected String name(String s) {
+	protected String name(String s, boolean cvtDQ) {
 		String name = m.get(s);
 		if (name != null) {
 			return name;
 		}
+                if(s.charAt(0) == '"') {
+                    if(s.substring(1, s.length()-1).matches("[A-Za-z_][A-Za-z0-9_]*")){
+                        s = "TK_" + s.substring(1, s.length()-1);
+                    }
+                    else {
+                        //s = "TK_" + s.substring(1, s.length()-1).;
+                        String s2 = s.substring(1, s.length()-1);
+                        s = "TK_";
+                        for (int i = 0; i < s2.length(); i++) {
+                            s += String.format("%02x", s2.codePointAt(i));
+                        }
+                    }
+                }
 		int loc = s.lastIndexOf(':');
                 //need a better solution here
 		if (loc > 0 && !(s.equals("\":\"") || s.equals("\"::\""))) {
@@ -68,6 +81,10 @@ public abstract class GrammarTranslatorVisitor extends Expression.Visitor {
 		}
 		m.put(s, name);
 		return name;
+	}
+
+	protected String name(String s) {
+		return name(s, false);
 	}
 
 	protected String name(Production p) {
