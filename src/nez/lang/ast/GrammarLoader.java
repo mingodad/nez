@@ -52,7 +52,7 @@ public final class GrammarLoader extends GrammarVisitorMap<GrammarLoaderVisitor>
 			}
 			Production rule = getGrammar().getProduction(localName);
 			if (rule != null) {
-				reportWarning(node, "duplicated rule name: " + localName);
+				reportWarning(node, "duplicated rule name: %s", localName);
 				rule = null;
 			}
 			Expression e = transducer.newInstance(node.get(_expr));

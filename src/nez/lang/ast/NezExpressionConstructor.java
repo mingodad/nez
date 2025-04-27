@@ -272,7 +272,7 @@ public class NezExpressionConstructor extends GrammarVisitorMap<ExpressionTransd
 			NonTerminal pat = Expressions.newNonTerminal(node, g, nameNode.toText());
 			Expression expr = newInstance(node.get(_expr));
 			Production p = g.addProduction(pat.getLocalName(), expr);
-			reportWarning(nameNode, "new production generated: " + p);
+			reportWarning(nameNode, "new production generated: %s", p);
 			return Expressions.newSymbol(node, pat);
 		}
 	}
