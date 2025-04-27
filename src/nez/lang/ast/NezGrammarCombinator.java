@@ -58,7 +58,7 @@ public class NezGrammarCombinator extends Combinator {
 	public Expression pCOMMENT() {
 		return Choice(//
 				Sequence(t("/*"), ZeroMore(Not(t("*/")), AnyChar()), t("*/")), //
-				Sequence(t("//"), ZeroMore(Not(P("EOL")), AnyChar()), P("EOL"))//
+				Sequence(t("//"), ZeroMore(Not(P("EOL")), AnyChar()), Option(P("EOL")))//
 		);
 	}
 
@@ -137,7 +137,7 @@ public class NezGrammarCombinator extends Combinator {
 	public Expression pProduction() {
 		Expression Name = Link("$name", Choice(P("NonTerminal"), P("String")));
 		Expression Expr = Link("$expr", "Expression");
-		return New(P("addQualifers"), Name, P("_"), P("SKIP"), t("="), P("_"), Expr, Tag("Production"));
+		return New(P("addQualifers"), Name, P("_"), P("SKIP"), Choice(t("="), t("<-")), P("_"), Expr, Tag("Production"));
 	}
 
 	public Expression paddQualifers() {
@@ -169,7 +169,7 @@ public class NezGrammarCombinator extends Combinator {
 	}
 
 	public Expression pRuleHead() {
-		return New(P("addQualifers"), Link(null, Choice(P("NonTerminal"), P("String"))), P("_"), P("SKIP"), t("="));
+		return New(P("addQualifers"), Link(null, Choice(P("NonTerminal"), P("String"))), P("_"), P("SKIP"), Choice(t("="), t("<-")));
 	}
 
 	public Expression pExpression() {

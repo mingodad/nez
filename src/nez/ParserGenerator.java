@@ -143,7 +143,7 @@ public class ParserGenerator {
 	private GrammarExtension lookupGrammarExtension(String fileExtension) throws IOException {
 		GrammarExtension ext = getGrammarExtension(fileExtension);
 		if (ext == null) {
-			if (!fileExtension.equals("nez")) {
+			if (!(fileExtension.equals("nez") | fileExtension.equals("peg"))) {
 				throw new ParserException("undefined grammar extension: " + fileExtension);
 			}
 			class P extends GrammarExtension {
