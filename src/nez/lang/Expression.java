@@ -843,7 +843,7 @@ public abstract class Expression extends AbstractList<Expression> implements Sou
 	public static class TransformVisitor extends Visitor {
 
 		protected Expression visitInner(Expression e, Object a) {
-			return (Expression) e.visit(this, null);
+			return (Expression) e.visit(this, a);
 		}
 
 		@Override

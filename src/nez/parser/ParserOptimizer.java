@@ -671,7 +671,7 @@ public class ParserOptimizer {
 			String uname = p.getUniqueName();
 			if (!this.isVisited(uname)) {
 				this.visited(uname);
-				Expression optimized = this.visitInner(p.getExpression(), null);
+				Expression optimized = this.visitInner(p.getExpression(), p);
 				p.setExpression(optimized);
 				if (strategy.Oalias) {
 					performAliasAnalysis(p);
@@ -919,6 +919,9 @@ public class ParserOptimizer {
 					while (e instanceof NonTerminal) {
 						NonTerminal n = (NonTerminal) e;
 						Production p = n.getProduction();
+						if(a == p) {
+                                                    break; //prevents inline the lhs inside itself
+						}
 						e = optimizeProduction(p);
 					}
 					return e;
