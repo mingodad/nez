@@ -13,6 +13,7 @@ import nez.parser.vm.MozMachine;
 import nez.parser.vm.ParserMachineCompiler;
 import nez.util.ConsoleUtils;
 import nez.util.Verbose;
+import nez.util.NaturalComparator;
 
 public class ParserStrategy {
 
@@ -25,7 +26,7 @@ public class ParserStrategy {
 
 	/* Optimization */
 	public boolean Optimization = true;
-	public boolean Oinline = true;
+	public boolean Oinline = false;
 	public boolean Oalias = false;
 
 	public boolean Olex = true;
@@ -190,16 +191,24 @@ public class ParserStrategy {
 		}
 	}
 
+        public void setWnone( boolean bHow) {
+            this.Wnone = bHow;
+            init();
+        }
+
 	public void report() {
-		for (String s : this.logs) {
-			if (!this.Wall) {
-				if (s.indexOf("notice") != -1) {
-					continue; // skip notice
-				}
-			}
-			ConsoleUtils.println(s);
-		}
-		this.init();
+                if(this.logs != null) {
+                        this.logs.sort(new NaturalComparator());
+                        for (String s : this.logs) {
+                                if (!this.Wall) {
+                                        if (s.indexOf("notice") != -1) {
+                                                continue; // skip notice
+                                        }
+                                }
+                                ConsoleUtils.println(s);
+                        }
+                        this.init();
+                }
 	}
 
 	public final void reportError(SourceLocation s, String message) {

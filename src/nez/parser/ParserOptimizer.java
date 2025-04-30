@@ -1184,19 +1184,22 @@ public class ParserOptimizer {
 
 	private final void reportError(Expression p, String message) {
 		if (p.getSourceLocation() != null) {
-			ConsoleUtils.perror(grammar, ConsoleUtils.ErrorColor, p.formatSourceMessage("error", message));
+                        strategy.reportError(p, message);
+			//ConsoleUtils.perror(grammar, ConsoleUtils.ErrorColor, p.formatSourceMessage("error", message));
 		}
 	}
 
 	private final void reportWarning(Expression p, String message) {
 		if (p.getSourceLocation() != null) {
-			ConsoleUtils.perror(grammar, ConsoleUtils.WarningColor, p.formatSourceMessage("warning", message));
+                        strategy.reportWarning(p, message);
+			//ConsoleUtils.perror(grammar, ConsoleUtils.WarningColor, p.formatSourceMessage("warning", message));
 		}
 	}
 
 	private final void reportNotice(Expression p, String message) {
 		if (p.getSourceLocation() != null) {
-			ConsoleUtils.perror(grammar, ConsoleUtils.WarningColor, p.formatSourceMessage("notice", message));
+                        strategy.reportNotice(p, message);
+			//ConsoleUtils.perror(grammar, ConsoleUtils.WarningColor, p.formatSourceMessage("notice", message));
 		}
 	}
 }

@@ -12,11 +12,13 @@ public class Cparse extends Command {
 	public void exec() throws IOException {
 		checkInputSource();
 		Parser parser = newParser();
+		parser.getParserStrategy().setWnone(true);
 		parser.setDisabledUnconsumed(true);
 		TreeWriter tw = this.getTreeWriter("ast xml json", "line");
 		while (hasInputSource()) {
 			Source input = nextInputSource();
 			Tree<?> node = parser.parse(input);
+			parser.getParserStrategy().report();
 			if (node == null) {
 				parser.showErrors();
 				continue;
