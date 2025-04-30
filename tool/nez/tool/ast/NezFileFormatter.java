@@ -242,11 +242,11 @@ public class NezFileFormatter extends TreeVisitor {
 			}
 			Tree<?> sub = node.get(i);
 			if (sub.is(_Choice)) {
-				f.write("(");
+				f.write("( ");
 			}
 			spacing = pExpression(sub);
 			if (sub.is(_Choice)) {
-				f.write(")");
+				f.write(" )");
 			}
 		}
 		return spacing;
