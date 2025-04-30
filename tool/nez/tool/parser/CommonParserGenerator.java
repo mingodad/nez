@@ -1137,6 +1137,7 @@ public abstract class CommonParserGenerator extends ParserGrammarWriter {
 					String f = _eval(sub);
 					If(temp);
 					{
+                                            if (f != null) {
 						String[] n = SaveState(sub);
 						Verbose(sub.toString());
 						If(f);
@@ -1148,6 +1149,9 @@ public abstract class CommonParserGenerator extends ParserGrammarWriter {
 							BackState(sub, n);
 						}
 						EndIf();
+                                            } else {
+                                                visit(e.get(0), a);
+                                            }
 					}
 					EndIf();
 				}
