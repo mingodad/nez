@@ -239,7 +239,7 @@ public class NezGrammarCombinator extends Combinator {
 	 */
 
 	public Expression pTagName() {
-		return New(c("A-Za-z0-9$"), ZeroMore(c("A-Za-z0-9_$")), Tag("Tagging"));
+		return New(OneMore(c("A-Za-z0-9_$")), Tag("Tagging"));
 	}
 
 	public Expression pTagging() {
