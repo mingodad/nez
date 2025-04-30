@@ -129,7 +129,26 @@ public class PEGTranslator extends ParserGrammarWriter {
 		public void visitPair(Nez.Pair p) {
 			int c = 0;
 			List<Expression> l = Expressions.flatten(p);
+                        int isCharacter = 0;
+                        StringBuilder sb = new StringBuilder();
+                        for (Expression e : l) {
+                            if(e instanceof Nez.Byte){
+                                ++isCharacter;
+                                StringUtils.formatByte(sb, false, ((Nez.Byte)e).byteChar, "\\x%02x", "'\\");
+                                continue;
+                            }
+                            break;
+                        }
+                        if(isCharacter > 1) {
+                            W("'" + sb.toString() + "'");
+                        }
+                        else isCharacter = 0;
 			for (Expression e : l) {
+                                if(isCharacter > 0) {
+                                    ++c;
+                                    --isCharacter;
+                                    continue;
+                                }
 				if (c > 0) {
 					W(" ");
 				}
@@ -267,7 +286,7 @@ public class PEGTranslator extends ParserGrammarWriter {
 		@Override
 		public void visitSymbolPredicate(Nez.SymbolPredicate p) {
 			// TODO Auto-generated method stub
-
+                        visitExpression(p.inner);
 		}
 
 		@Override
